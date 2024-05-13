@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import axios from 'axios';
 import AdminRegistration from './AdminRegistration';
 import HRRegistration from './HRRegistration';
 import AdminLogin from './AdminLogin';
 import HRLogin from './HRLogin';
 import './App.css';
-
+import ForgotPassword from './ForgotPassword';
 
 const AdminDashboard = () => {
   return (
@@ -27,15 +26,15 @@ const HRDashboard = () => {
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [registrationData, setRegistrationData] = useState(null); // State to store registration data
 
+  const handleRegistrationSuccess = (data) => {
+    setRegistrationData(data);
+    console.log('Registration successful:', data); // You can further handle the registration data here
+  };
   const handleLogin = (data) => {
     setIsLoggedIn(true);
     setIsAdmin(data.isAdmin);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setIsAdmin(false);
   };
 
   return (
@@ -61,9 +60,7 @@ const App = () => {
                   </div>
                 )}
                 {isLoggedIn && (
-                  <div>
-                    <h1>Welcome {isAdmin ? 'Admin' : 'HR'}</h1>
-                    <button onClick={handleLogout}>Logout</button>
+                  <div> 
                     {isAdmin && <AdminDashboard />}
                     {!isAdmin && <HRDashboard />}
                   </div>
@@ -71,14 +68,18 @@ const App = () => {
               </div>
             }
           />
+        <Route path="/hr/register" element={<HRRegistration />} /> {/* Define route for HRRegistration */}
           <Route path="/admin/register" element={<AdminRegistration />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/hr/register" element={<HRRegistration />} />
           <Route path="/admin" element={<AdminLogin onLogin={handleLogin} />} />
           <Route path="/hr" element={<HRLogin onLogin={handleLogin} />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} /> {/* New route for Admin Dashboard */}
+          <Route path="/hr/dashboard" element={<HRDashboard />} /> {/* New route for Admin Dashboard */}
+
         </Routes>
       </div>
     </Router>
   );
 };
-
 export default App;
