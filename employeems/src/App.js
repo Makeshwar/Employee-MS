@@ -6,22 +6,8 @@ import AdminLogin from './AdminLogin';
 import HRLogin from './HRLogin';
 import './App.css';
 import ForgotPassword from './ForgotPassword';
-
-const AdminDashboard = () => {
-  return (
-    <div className="dashboard">
-      <h2>Admin Dashboard</h2>
-    </div>
-  );
-};
-
-const HRDashboard = () => {
-  return (
-    <div className="dashboard">
-      <h2>HR Dashboard</h2>
-    </div>
-  );
-};
+import AdminDashboard from './AdminDashboard'; // Import AdminDashboard component
+import HRDashboard from './HRDashboard'; // Import HRDashboard component
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,6 +18,7 @@ const App = () => {
     setRegistrationData(data);
     console.log('Registration successful:', data); // You can further handle the registration data here
   };
+
   const handleLogin = (data) => {
     setIsLoggedIn(true);
     setIsAdmin(data.isAdmin);
@@ -68,18 +55,19 @@ const App = () => {
               </div>
             }
           />
-        <Route path="/hr/register" element={<HRRegistration />} /> {/* Define route for HRRegistration */}
+          <Route path="/forgot-password/:userType" element={<ForgotPassword />} />
           <Route path="/admin/register" element={<AdminRegistration />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/hr/register" element={<HRRegistration />} />
+          <Route path="/admin/login" element={<AdminLogin onLogin={handleLogin} />} />
+          <Route path="/hr/login" element={<HRLogin onLogin={handleLogin} />} />
           <Route path="/admin" element={<AdminLogin onLogin={handleLogin} />} />
           <Route path="/hr" element={<HRLogin onLogin={handleLogin} />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} /> {/* New route for Admin Dashboard */}
-          <Route path="/hr/dashboard" element={<HRDashboard />} /> {/* New route for Admin Dashboard */}
-
+          <Route path="/hr/dashboard" element={<HRDashboard />} /> {/* New route for HR Dashboard */}
         </Routes>
       </div>
     </Router>
   );
 };
+
 export default App;

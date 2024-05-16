@@ -27,7 +27,7 @@ const AdminRegistration = ({ onRegister }) => {
       setError('Password must be at least 8 characters long');
       return;
     }
-    
+   
     const hasUpperCase = /[A-Z]/.test(password);
     const hasLowerCase = /[a-z]/.test(password);
     const hasSymbol = /[!@#$%^&*]/.test(password);
@@ -40,7 +40,7 @@ const AdminRegistration = ({ onRegister }) => {
     setIsLoading(true); // Set loading state to true
 
     try {
-      const response = await axios.post('http://localhost:5001/api/Admin/register', {
+      const response = await axios.post('http://localhost:5001/api/admin/register', {
         name,
         username,
         password,
